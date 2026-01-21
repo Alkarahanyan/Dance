@@ -1,5 +1,6 @@
 
 export type Difficulty = 'easy' | 'medium' | 'hard';
+export type View = 'library' | 'training' | 'music';
 
 export interface DanceElement {
   id: string;

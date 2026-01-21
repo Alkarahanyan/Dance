@@ -7,19 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Latin Dance Trainer</title>
     <script>
-      // Глобальный обработчик для вывода ошибок прямо на экран
+      // Полифилл для process.env, который требуется SDK
+      window.process = window.process || { env: { NODE_ENV: 'production' } };
+      
+      // Глобальный обработчик для диагностики
       window.onerror = function(msg, url, line, col, error) {
+        console.error("Global error:", msg, "at", url, line, col);
         const root = document.getElementById('root');
-        if (root) {
+        if (root && root.innerHTML.includes('animate-spin')) {
           root.innerHTML = `
-            <div style="color: white; background: #b91c1c; padding: 2rem; font-family: system-ui, sans-serif; min-height: 100vh;">
-              <h2 style="font-size: 1.5rem; font-bold; margin-bottom: 1rem;">Ошибка инициализации:</h2>
-              <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 0.5rem;">
+            <div style="color: white; background: #b91c1c; padding: 2rem; font-family: system-ui, sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+              <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">Ошибка загрузки приложения</h2>
+              <div style="background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 0.5rem; max-width: 600px; width: 100%;">
                 <p><strong>Текст:</strong> ${msg}</p>
                 <p><strong>Файл:</strong> ${url}</p>
                 <p><strong>Место:</strong> ${line}:${col}</p>
               </div>
-              <p style="margin-top: 1rem; opacity: 0.8;">Проверьте расширения файлов в импортах (.ts/.tsx).</p>
+              <button onclick="location.reload()" style="margin-top: 2rem; background: white; color: #b91c1c; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: bold; border: none; cursor: pointer;">Перезагрузить</button>
             </div>
           `;
         }
@@ -43,10 +47,10 @@
   </head>
   <body class="bg-gray-900">
     <div id="root">
-      <div class="flex items-center justify-center min-h-screen text-cyan-400">
+      <div class="flex items-center justify-center min-h-screen text-cyan-400 bg-gray-950">
         <div class="flex flex-col items-center gap-4">
           <div class="w-12 h-12 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
-          <p class="animate-pulse text-lg">Инициализация модулей...</p>
+          <p class="animate-pulse text-lg font-medium">Инициализация модулей...</p>
         </div>
       </div>
     </div>

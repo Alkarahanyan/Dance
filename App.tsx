@@ -5,10 +5,8 @@ import DanceLibrary from './components/DanceLibrary.tsx';
 import TrainingMode from './components/TrainingMode.tsx';
 import MusicLibrary from './components/MusicLibrary.tsx';
 import { initialDances } from './data/dances.ts';
-import type { Dance, DanceElement, Difficulty, MusicTrackMetadata } from './types.ts';
+import type { Dance, DanceElement, Difficulty, MusicTrackMetadata, View } from './types.ts';
 import * as musicDb from './services/musicDb.ts';
-
-export type View = 'library' | 'training' | 'music';
 
 type ElementData = { name: string; description: string; difficulty: Difficulty; videoFile?: File };
 
@@ -120,7 +118,7 @@ const App: React.FC = () => {
     setDances(prevDances => 
       prevDances.map(dance => {
         if (dance.id === danceId) {
-          const elementToDelete = dance.elements.find(el => el.id === elementId);
+          const elementToDelete = dance.elements.find(el => elementId === el.id);
           if (elementToDelete && elementToDelete.videoUrl) {
             URL.revokeObjectURL(elementToDelete.videoUrl);
           }
