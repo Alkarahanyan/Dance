@@ -1,25 +1,13 @@
 
 import { GoogleGenAI, Modality } from '@google/genai';
 
-// Безопасное получение ключа
-const getApiKey = () => {
-  try {
-    return process.env.API_KEY || "";
-  } catch (e) {
-    return "";
-  }
-};
-
-const apiKey = getApiKey();
-const ai = new GoogleGenAI({ apiKey });
+// Initialize the GoogleGenAI client with the API key from environment variables.
+// Use process.env.API_KEY directly as per the coding guidelines.
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const speak = async (text: string): Promise<string> => {
-  if (!apiKey) {
-    console.warn("Gemini API Key is missing. TTS will not work.");
-    throw new Error("API Key missing");
-  }
-
   try {
+    // Generate audio content using the Gemini TTS model.
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash-preview-tts",
       contents: [{ parts: [{ text: `Говори четко и энергично: ${text}` }] }],

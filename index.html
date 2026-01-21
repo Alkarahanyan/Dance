@@ -6,11 +6,26 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Latin Dance Trainer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      // Заглушка для process.env, чтобы избежать ошибок ReferenceError в браузере
-      window.process = window.process || { env: { API_KEY: "" } };
+      // 1. Определение process должно быть самым первым, до любых загрузок
+      window.process = { env: { API_KEY: "" } };
+      
+      // 2. Ловушка для отлова ошибок и вывода их на экран вместо черного фона
+      window.onerror = function(msg, url, line, col, error) {
+        const root = document.getElementById('root');
+        if (root) {
+          root.innerHTML = `
+            <div style="color: white; background: #900; padding: 20px; font-family: sans-serif;">
+              <h2>Ошибка загрузки приложения</h2>
+              <p>${msg}</p>
+              <small>Файл: ${url} (строка ${line})</small>
+            </div>
+          `;
+        }
+        return false;
+      };
     </script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script type="importmap">
 {
   "imports": {
@@ -26,8 +41,12 @@
 </script>
   </head>
   <body class="bg-gray-900">
-    <div id="root"></div>
-    <!-- Явное подключение точки входа приложения -->
+    <div id="root">
+      <div class="flex items-center justify-center min-h-screen">
+        <div class="text-cyan-400 animate-pulse text-xl">Загрузка тренажера...</div>
+      </div>
+    </div>
+    <!-- Добавляем расширение .tsx для корректной работы в некоторых средах -->
     <script type="module" src="./index.tsx"></script>
   </body>
 </html>
