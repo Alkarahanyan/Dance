@@ -1,10 +1,24 @@
 
 import { GoogleGenAI, Modality } from '@google/genai';
 
-// FIX: Initialized GoogleGenAI client strictly with process.env.API_KEY per guidelines.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Безопасное получение ключа
+const getApiKey = () => {
+  try {
+    return process.env.API_KEY || "";
+  } catch (e) {
+    return "";
+  }
+};
+
+const apiKey = getApiKey();
+const ai = new GoogleGenAI({ apiKey });
 
 export const speak = async (text: string): Promise<string> => {
+  if (!apiKey) {
+    console.warn("Gemini API Key is missing. TTS will not work.");
+    throw new Error("API Key missing");
+  }
+
   try {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash-preview-tts",
@@ -13,7 +27,7 @@ export const speak = async (text: string): Promise<string> => {
         responseModalities: [Modality.AUDIO],
         speechConfig: {
           voiceConfig: {
-            prebuiltVoiceConfig: { voiceName: 'Kore' }, // 'Kore' is a good general voice.
+            prebuiltVoiceConfig: { voiceName: 'Kore' },
           },
         },
       },
