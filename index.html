@@ -7,18 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Latin Dance Trainer</title>
     <script>
-      // Улучшенный отлов ошибок для диагностики
+      // Глобальный обработчик для вывода ошибок прямо на экран
       window.onerror = function(msg, url, line, col, error) {
         const root = document.getElementById('root');
         if (root) {
           root.innerHTML = `
             <div style="color: white; background: #b91c1c; padding: 2rem; font-family: system-ui, sans-serif; min-height: 100vh;">
-              <h2 style="font-size: 1.5rem; font-bold; margin-bottom: 1rem;">Ошибка загрузки:</h2>
+              <h2 style="font-size: 1.5rem; font-bold; margin-bottom: 1rem;">Ошибка инициализации:</h2>
               <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 0.5rem;">
-                <p><strong>Сообщение:</strong> ${msg}</p>
+                <p><strong>Текст:</strong> ${msg}</p>
                 <p><strong>Файл:</strong> ${url}</p>
-                <p><strong>Строка:</strong> ${line}:${col}</p>
+                <p><strong>Место:</strong> ${line}:${col}</p>
               </div>
+              <p style="margin-top: 1rem; opacity: 0.8;">Проверьте расширения файлов в импортах (.ts/.tsx).</p>
             </div>
           `;
         }
@@ -45,7 +46,7 @@
       <div class="flex items-center justify-center min-h-screen text-cyan-400">
         <div class="flex flex-col items-center gap-4">
           <div class="w-12 h-12 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
-          <p class="animate-pulse text-lg">Загрузка тренажера...</p>
+          <p class="animate-pulse text-lg">Инициализация модулей...</p>
         </div>
       </div>
     </div>

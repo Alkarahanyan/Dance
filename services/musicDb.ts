@@ -1,5 +1,5 @@
 
-import { MusicTrack, MusicTrackMetadata } from '../types';
+import { MusicTrack, MusicTrackMetadata } from '../types.ts';
 
 const DB_NAME = 'LatinTrainerMusicDB';
 const STORE_NAME = 'tracks';

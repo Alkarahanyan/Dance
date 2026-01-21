@@ -1,6 +1,6 @@
 
 import React from 'react';
-import type { View } from '../App';
+import { View } from '../App.tsx';
 
 interface HeaderProps {
   currentView: View;
@@ -19,16 +19,16 @@ const Header: React.FC<HeaderProps> = ({ currentView, setView }) => {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <h1 className="text-xl font-bold text-cyan-400">Latin Trainer</h1>
+            <h1 className="text-xl font-bold text-cyan-400 tracking-wider">LATIN TRAINER</h1>
           </div>
-          <div className="flex items-baseline space-x-4">
+          <div className="flex items-baseline space-x-2 sm:space-x-4">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => setView(item.id)}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
                   currentView === item.id
-                    ? 'bg-cyan-600 text-white'
+                    ? 'bg-cyan-600 text-white shadow-lg'
                     : 'text-gray-300 hover:bg-gray-700 hover:text-white'
                 }`}
               >
