@@ -1,12 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
-import Header from './components/Header';
-import DanceLibrary from './components/DanceLibrary';
-import TrainingMode from './components/TrainingMode';
-import MusicLibrary from './components/MusicLibrary';
-import { initialDances } from './data/dances';
-import type { Dance, DanceElement, Difficulty, MusicTrackMetadata } from './types';
-import * as musicDb from './services/musicDb';
+import Header from './components/Header.tsx';
+import DanceLibrary from './components/DanceLibrary.tsx';
+import TrainingMode from './components/TrainingMode.tsx';
+import MusicLibrary from './components/MusicLibrary.tsx';
+import { initialDances } from './data/dances.ts';
+import type { Dance, DanceElement, Difficulty, MusicTrackMetadata } from './types.ts';
+import * as musicDb from './services/musicDb.ts';
 
 export type View = 'library' | 'training' | 'music';
 
@@ -147,7 +147,7 @@ const App: React.FC = () => {
 
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white font-sans">
+    <div className="min-h-screen bg-gray-900 text-white font-sans text-base">
       <Header currentView={view} setView={setView} />
       <main className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
         {view === 'library' && <DanceLibrary 

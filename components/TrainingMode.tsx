@@ -1,10 +1,10 @@
 
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
-import type { Dance, DanceElement, Difficulty, MusicTrackMetadata } from '../types';
-import { speak } from '../services/geminiService';
-import { play } from '../services/audioPlayer';
-import { CheckIcon } from './icons/CheckIcon';
-import * as musicDb from '../services/musicDb';
+import type { Dance, DanceElement, Difficulty, MusicTrackMetadata } from '../types.ts';
+import { speak } from '../services/geminiService.ts';
+import { play } from '../services/audioPlayer.ts';
+import { CheckIcon } from './icons/CheckIcon.tsx';
+import * as musicDb from '../services/musicDb.ts';
 
 interface TrainingModeProps {
   dances: Dance[];
@@ -21,7 +21,7 @@ const difficultyFilters: { id: Difficulty | 'all', label: string }[] = [
 const TrainingMode: React.FC<TrainingModeProps> = ({ dances, musicTracks }) => {
   const [selectedDanceId, setSelectedDanceId] = useState<string>(dances[0]?.id || '');
   const [selectedElementIds, setSelectedElementIds] = useState<Set<string>>(new Set());
-  const [intervalSeconds, setIntervalSeconds] = useState(8); // По умолчанию 8 секунд
+  const [intervalSeconds, setIntervalSeconds] = useState(8); 
   const [selectedMusicId, setSelectedMusicId] = useState<string>('');
   const [musicUrl, setMusicUrl] = useState<string | null>(null);
   const [isTraining, setIsTraining] = useState(false);
@@ -115,18 +115,15 @@ const TrainingMode: React.FC<TrainingModeProps> = ({ dances, musicTracks }) => {
     setIsTraining(true);
     setIsWarmup(true);
 
-    // 1. Запускаем музыку
     setTimeout(() => {
         audioRef.current?.play();
     }, 100);
 
-    // 2. Устанавливаем задержку 20 секунд перед первой командой
     warmupTimeoutRef.current = window.setTimeout(() => {
         setIsWarmup(false);
         announceRandomElement();
-        // 3. После первой команды запускаем интервал
         intervalRef.current = window.setInterval(announceRandomElement, intervalSeconds * 1000);
-    }, 20000); // 20 секунд задержки
+    }, 20000); 
   };
 
   const handleStopTraining = () => {

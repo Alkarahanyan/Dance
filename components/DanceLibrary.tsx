@@ -1,9 +1,9 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
-import type { Dance, DanceElement, Difficulty } from '../types';
-import { PlusIcon } from './icons/PlusIcon';
-import { EditIcon } from './icons/EditIcon';
-import { TrashIcon } from './icons/TrashIcon';
+import type { Dance, DanceElement, Difficulty } from '../types.ts';
+import { PlusIcon } from './icons/PlusIcon.tsx';
+import { EditIcon } from './icons/EditIcon.tsx';
+import { TrashIcon } from './icons/TrashIcon.tsx';
 
 const difficultyMap: Record<Difficulty, { label: string; color: string }> = {
   easy: { label: 'Легкий', color: 'bg-green-600' },

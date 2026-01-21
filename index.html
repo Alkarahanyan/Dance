@@ -7,18 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Latin Dance Trainer</title>
     <script>
-      // 1. Определение process должно быть самым первым, до любых загрузок
-      window.process = { env: { API_KEY: "" } };
+      // 1. Создаем заглушку для process.env, чтобы браузер не падал при обращении к ключам
+      window.process = window.process || { env: { API_KEY: "" } };
       
-      // 2. Ловушка для отлова ошибок и вывода их на экран вместо черного фона
+      // 2. Улучшенный отлов ошибок: если что-то не загрузится, мы увидим текст ошибки на красном фоне
       window.onerror = function(msg, url, line, col, error) {
         const root = document.getElementById('root');
         if (root) {
           root.innerHTML = `
-            <div style="color: white; background: #900; padding: 20px; font-family: sans-serif;">
-              <h2>Ошибка загрузки приложения</h2>
-              <p>${msg}</p>
-              <small>Файл: ${url} (строка ${line})</small>
+            <div style="color: white; background: #b91c1c; padding: 2rem; font-family: system-ui, sans-serif; min-height: 100vh;">
+              <h2 style="font-size: 1.5rem; font-bold; margin-bottom: 1rem;">Произошла ошибка при загрузке:</h2>
+              <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 0.5rem;">
+                <p><strong>Сообщение:</strong> ${msg}</p>
+                <p><strong>Файл:</strong> ${url}</p>
+                <p><strong>Строка/Колонка:</strong> ${line}:${col}</p>
+              </div>
+              <p style="margin-top: 1rem; opacity: 0.8;">Проверьте консоль браузера (F12) для деталей.</p>
             </div>
           `;
         }
@@ -29,24 +33,26 @@
     <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom": "https://esm.sh/react-dom@^19.2.3",
-    "react-dom/client": "https://esm.sh/react-dom@^19.2.3/client",
-    "react/jsx-runtime": "https://esm.sh/react@^19.2.3/jsx-runtime",
-    "@google/genai": "https://esm.sh/@google/genai@^1.37.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/"
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "react/jsx-runtime": "https://esm.sh/react@19.0.0/jsx-runtime",
+    "@google/genai": "https://esm.sh/@google/genai@1.37.0",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
   }
 }
 </script>
   </head>
   <body class="bg-gray-900">
     <div id="root">
-      <div class="flex items-center justify-center min-h-screen">
-        <div class="text-cyan-400 animate-pulse text-xl">Загрузка тренажера...</div>
+      <div class="flex items-center justify-center min-h-screen text-cyan-400">
+        <div class="flex flex-col items-center gap-4">
+          <div class="w-12 h-12 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
+          <p class="animate-pulse text-lg">Загрузка приложения...</p>
+        </div>
       </div>
     </div>
-    <!-- Добавляем расширение .tsx для корректной работы в некоторых средах -->
     <script type="module" src="./index.tsx"></script>
   </body>
 </html>
