@@ -1,0 +1,5 @@
+{
+  "name": "Latin Dance Trainer",
+  "description": "An application to practice Latin American dance moves with a voice assistant that calls out elements during training in Russian.",
+  "requestFramePermissions": []
+}
