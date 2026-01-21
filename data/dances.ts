@@ -1,5 +1,5 @@
 
-import { Dance } from '../types';
+import { Dance } from '../types.ts';
 
 export const initialDances: Dance[] = [
   {

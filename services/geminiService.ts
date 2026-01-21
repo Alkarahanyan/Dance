@@ -1,13 +1,12 @@
 
 import { GoogleGenAI, Modality } from '@google/genai';
 
-// Initialize the GoogleGenAI client with the API key from environment variables.
-// Use process.env.API_KEY directly as per the coding guidelines.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 export const speak = async (text: string): Promise<string> => {
   try {
-    // Generate audio content using the Gemini TTS model.
+    // Инициализируем клиент непосредственно перед вызовом
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+
+    // Генерируем аудио с использованием модели TTS
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash-preview-tts",
       contents: [{ parts: [{ text: `Говори четко и энергично: ${text}` }] }],
@@ -15,6 +14,7 @@ export const speak = async (text: string): Promise<string> => {
         responseModalities: [Modality.AUDIO],
         speechConfig: {
           voiceConfig: {
+            // Другие доступные голоса: 'Puck', 'Charon', 'Kore', 'Fenrir', 'Zephyr'
             prebuiltVoiceConfig: { voiceName: 'Kore' },
           },
         },
